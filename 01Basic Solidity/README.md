@@ -138,7 +138,7 @@ Once deployed, expand the contract in Remix and try these:
 
 ## 📊 Flowchart (Logic Overview)
 
-```mermaid
+```markdown
 flowchart TD
     A[store(uint256)] -->|sets| B[favoriteNumber]
     C[retrieve()] -->|returns| B
