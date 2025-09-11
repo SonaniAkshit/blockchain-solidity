@@ -1,0 +1,29 @@
+# Node modules
+node_modules/
+
+# Dependency lock files
+package-lock.json
+yarn.lock
+
+# Build artifacts (compiled contract outputs)
+artifacts/
+cache/
+build/
+
+# Remix specific files
+remix-ide-workspace.json
+remix.config.js
+remix.log
+
+# Hardhat/Truffle extra
+typechain/
+coverage/
+coverage.json
+
+# Debug / temp files
+*.dbg.json
+*.tmp
+*.log
+
+# Environment variables
+.env
