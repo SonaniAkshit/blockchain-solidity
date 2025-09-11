@@ -1,153 +1,101 @@
-# BasicSolidity Contract
+# Solidity Examples: BasicSolidity & SimpleStorage
 
-## 📖 Definition
-
-This project contains a simple Solidity smart contract that demonstrates the **basic building blocks** of Ethereum development. It covers:
-
-* **Variables / Data Types**
-
-  * `bool` → true/false values
-  * `uint256` → unsigned integer (positive numbers)
-  * `int256` → signed integer (positive and negative numbers)
-  * `string` → text values
-  * `address` → Ethereum account or contract address
-  * `bytes32` → fixed-length 32-byte data
-
-* **Structs** → Custom data type grouping multiple values
-
-* **Arrays** → Fixed or dynamic lists of elements
-
-* **Mappings** → Key-value storage (like a dictionary)
-
-* **Functions** → Read and update contract state
+This project demonstrates fundamental Solidity concepts such as variables, structs, arrays, mappings, functions, storage, and deploying smart contracts.
 
 ---
 
-## 📂 File
+## 📌 Files
 
-* `BasicSolidity.sol`
+* **`BasicSolidity.sol`**
+  Covers:
 
----
+  * Versioning & SPDX license
+  * Contract declaration
+  * Types & declaring variables (`uint256`, `int256`, `bool`, `string`, `address`, `bytes32`)
+  * Default initializations
+  * Structs
+  * Arrays (dynamic)
+  * Mappings
+  * Functions (state-changing examples: `addNumber`, `deposit`)
+  * Intro to storage, scope, visibility
 
-## ⚙️ How to Compile and Deploy
+* **`SimpleStorage.sol`**
+  Covers:
 
-### 1. Open Remix IDE
-
-* Go to [https://remix.ethereum.org](https://remix.ethereum.org)
-
-### 2. Create File
-
-* In Remix, create a new file called **`BasicSolidity.sol`**
-* Copy and paste the contract code from this repo into the file
-
-### 3. Compile
-
-* In the **Solidity Compiler** tab:
-
-  * Select **version 0.8.30** (or the closest available ≥0.8.0)
-  * Click **Compile BasicSolidity.sol**
-
-### 4. Deploy
-
-* Go to the **Deploy & Run Transactions** tab
-* Select **Environment**:
-
-  * `JavaScript VM` (local in-browser blockchain, free ETH)
-  * or `Injected Provider` (MetaMask) if you want to deploy on a real/test network
-* Click **Deploy**
-* Contract will appear under **Deployed Contracts**
-
-### 5. Interact
-
-* Expand your deployed contract in Remix
-* Try these functions:
-
-  * `myUint`, `myString`, `myAddress` → Read public variables
-  * `addNumber(10)` → Add number to array
-  * `deposit(50)` → Deposit tokens to your balance
-  * `balances(msg.sender)` → Check your balance
----
-
-# SimpleStorage Contract
-
-## 📖 Definition
-
-This contract is a beginner-friendly **Solidity smart contract** that allows you to:
-
-* **Store and retrieve a number**
-* **Create a list of people** (with name and favorite number)
-* **Use a mapping** to quickly look up a person’s favorite number by their name
-
-It demonstrates:
-
-* State variables (`favoriteNumber`)
-* Structs (`People`)
-* Dynamic arrays (`people`)
-* Mappings (`nameToFavoriteNumber`)
-* Functions (`store`, `retrieve`, `addPerson`)
-
----
-
-## 📂 File
-
-* `SimpleStorage.sol`
+  * State variables and storage
+  * Structs and arrays
+  * Mappings
+  * Public and view functions (`store`, `retrieve`, `addPerson`)
+  * Example of state-changing and read-only functions
 
 ---
 
 ## ⚙️ How to Compile and Deploy
 
-### 1. Open Remix IDE
+You can use **Remix IDE** ([https://remix.ethereum.org/](https://remix.ethereum.org/)) to compile and deploy both contracts.
 
-* Go to [https://remix.ethereum.org](https://remix.ethereum.org)
+### Steps:
 
-### 2. Create File
+1. Open [Remix IDE](https://remix.ethereum.org/).
+2. Create two new files inside your workspace:
 
-* In Remix, create a new file called **`SimpleStorage.sol`**
-* Copy and paste the contract code into this file
+   * `BasicSolidity.sol`
+   * `SimpleStorage.sol`
+3. Paste the respective code into each file.
+4. In the **Solidity Compiler** tab:
 
-### 3. Compile
+   * Select compiler version `0.8.30` (or `^0.8.0`).
+   * Click **Compile BasicSolidity.sol** or **Compile SimpleStorage.sol**.
+5. In the **Deploy & Run Transactions** tab:
 
-* In the **Solidity Compiler** tab:
+   * Choose `BasicSolidity` or `SimpleStorage` from the contract dropdown.
+   * Click **Deploy**.
+6. After deploying:
 
-  * Choose version **0.8.30** (or a compatible `^0.8.x`)
-  * Click **Compile SimpleStorage.sol**
+   * For `BasicSolidity`:
 
-### 4. Deploy
+     * Call `addNumber(10)` to add numbers into the array.
+     * Call `deposit(100)` to increase your balance in the mapping.
+   * For `SimpleStorage`:
 
-* Go to the **Deploy & Run Transactions** tab
-* Select **Environment**:
-
-  * `JavaScript VM` (local, free ETH for testing)
-  * or `Injected Provider` (e.g., MetaMask) to deploy on a real/test network
-* Click **Deploy**
-* Contract will appear under **Deployed Contracts**
-
----
-
-## 🚀 How to Interact
-
-Once deployed, expand the contract in Remix and try these:
-
-* **`store(uint256)`** → Save a favorite number
-* **`retrieve()`** → View the stored number
-* **`addPerson(string, uint256)`** → Add a new person with their name and favorite number
-* **`people(uint index)`** → Get a person by index (from the `people` array)
-* **`nameToFavoriteNumber(string)`** → Look up a favorite number by person’s name
+     * Call `store(42)` to update `favoriteNumber`.
+     * Call `retrieve()` to read it back.
+     * Call `addPerson("Alice", 25)` to add a new entry to the people list.
 
 ---
 
-## 📊 Flowchart (Logic Overview)
+## 📊 Data Flow Diagram
 
-```markdown
-flowchart TD
-    A[store(uint256)] -->|sets| B[favoriteNumber]
-    C[retrieve()] -->|returns| B
+### `BasicSolidity.sol`
 
-    D[addPerson(string, uint256)] --> E[people array]
-    D --> F[nameToFavoriteNumber mapping]
-
-    E -->|index| G[People{name, favoriteNumber}]
-    F -->|lookup by name| H[favoriteNumber]
 ```
+ User
+   │
+   ├── addNumber(10) ───────────▶ numbers[] (dynamic array)
+   │
+   └── deposit(100) ───────────▶ balances[msg.sender] (mapping)
+```
+
+### `SimpleStorage.sol`
+
+```
+ User
+   │
+   ├── store(42) ──────────────▶ favoriteNumber (uint256)
+   │
+   ├── retrieve() ◀───────────── favoriteNumber (returns value)
+   │
+   └── addPerson("Alice", 25) ─▶ people[] (array of struct)
+                                 │
+                                 └── nameToFavoriteNumber["Alice"] = 25 (mapping)
+```
+
+---
+
+## ✅ Recap
+
+* **BasicSolidity** introduces variables, structs, arrays, mappings, and functions.
+* **SimpleStorage** focuses on storage, retrieval, mappings, and struct interactions.
+* Both contracts are beginner-friendly building blocks for understanding Solidity and Ethereum smart contracts.
 
 ---
