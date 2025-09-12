@@ -15,7 +15,7 @@ contract BasicSolidity {
         string name;
         uint256 age;
     }
-    Person public student = Person("Alice", 22);
+    Person public student = Person("Akshit", 49);
 
     // Array
     uint256[] public numbers;

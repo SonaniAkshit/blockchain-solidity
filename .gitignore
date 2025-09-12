@@ -1,6 +1,7 @@
 # Node modules
 node_modules/
 .deps
+.states
 
 # Dependency lock files
 package-lock.json
