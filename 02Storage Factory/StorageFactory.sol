@@ -1,27 +1,27 @@
-// SPDX-License-Identifier: MIT 
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-pragma solidity ^0.8.7;
-
-import "./SimpleStorage.sol"; 
+import "./SimpleStorage.sol";
 
 contract StorageFactory {
-    
-    SimpleStorage[] public simpleStorageArray;
-    
-    function createSimpleStorageContract() public {
-        SimpleStorage simpleStorage = new SimpleStorage();
-        simpleStorageArray.push(simpleStorage);
+    SimpleStorage[] public storageArray;
+  
+    function createSimpleStorage() public {
+        SimpleStorage s = new SimpleStorage();
+        storageArray.push(s);
     }
-    
-    function sfStore(uint256 _simpleStorageIndex, uint256 _simpleStorageNumber) public {
-        // Address 
-        // ABI 
-        // SimpleStorage(address(simpleStorageArray[_simpleStorageIndex])).store(_simpleStorageNumber);
-        simpleStorageArray[_simpleStorageIndex].store(_simpleStorageNumber);
+
+    function setNumberInStorage(uint256 index, uint256 _num) public {
+        SimpleStorage s = storageArray[index];
+        s.setNumber(_num);
     }
-    
-    function sfGet(uint256 _simpleStorageIndex) public view returns (uint256) {
-        // return SimpleStorage(address(simpleStorageArray[_simpleStorageIndex])).retrieve();
-        return simpleStorageArray[_simpleStorageIndex].retrieve();
+
+    function getNumberFromStorage(uint256 index) public view returns (uint256) {
+        SimpleStorage s = storageArray[index];
+        return s.number();
+    }
+
+    function countSimpleStorages() public view returns (uint256) {
+        return storageArray.length;
     }
 }
