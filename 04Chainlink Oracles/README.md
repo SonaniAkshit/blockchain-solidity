@@ -4,61 +4,66 @@
 
 ### 📖 Definition
 
-This project demonstrates how **smart contracts get real-world data** using **Chainlink Oracles**.
-Normally, **blockchains cannot access external data (like stock prices or APIs)** because they are closed systems.
-**Chainlink** solves this by providing a **decentralized network of oracles** that securely deliver data on-chain.
+This project shows how a **smart contract fetches real-world ETH/USD prices** using **Chainlink’s decentralized oracle network**.
+Blockchains can’t directly access off-chain data such as API prices or web data because they’re **closed systems**.
+**Chainlink** solves this problem through **oracles** — independent nodes that bring verified external data onto the blockchain.
 
 ---
 
 ### 🧠 Concepts Covered
 
-| Topic                                    | Description                                                                                                |
-| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| **Chainlink Oracle Network**             | A decentralized group of nodes that fetch and verify real-world data before sending it to smart contracts. |
-| **Why APIs Don’t Work Directly**         | Smart contracts can’t make HTTP calls due to blockchain isolation, so they need oracles.                   |
-| **Centralized vs Decentralized Oracles** | Centralized oracles can fail or be manipulated; Chainlink prevents this by using multiple nodes.           |
-| **data.chain.link**                      | The official Chainlink data feed explorer for live on-chain prices.                                        |
-| **Price Feed Example**                   | Using Chainlink to get live ETH/USD prices directly in your Solidity contract.                             |
+| Topic                                    | Description                                                                                             |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Chainlink Oracle Network**             | A decentralized group of nodes that collect, verify, and deliver data (like prices) to smart contracts. |
+| **Why APIs Don’t Work Directly**         | Smart contracts can’t make HTTP requests because of blockchain isolation.                               |
+| **Centralized vs Decentralized Oracles** | Centralized oracles can be manipulated; Chainlink uses multiple nodes to ensure trust and accuracy.     |
+| **data.chain.link**                      | The official Chainlink data feed explorer showing live on-chain prices and oracle activity.             |
+| **Price Feed Example**                   | Using Chainlink to get live ETH/USD price directly from a verified price feed contract.                 |
 
 ---
 
 ### 📂 Files
 
-| File                    | Description                                                             |
-| ----------------------- | ----------------------------------------------------------------------- |
-| **PriceConsumerV3.sol** | Solidity contract that reads ETH/USD price using Chainlink oracle feed. |
+| File                  | Description                                                                                                  |
+| --------------------- | ------------------------------------------------------------------------------------------------------------ |
+| **ChainLinkFund.sol** | Solidity smart contract that retrieves and returns live ETH/USD price from Chainlink’s Sepolia testnet feed. |
 
 ---
 
 ### ⚙️ How It Works
 
-1. The contract imports `AggregatorV3Interface` from Chainlink.
-2. When deployed, it connects to a specific **Chainlink Price Feed contract** (like ETH/USD).
-3. The `getLatestPrice()` function calls Chainlink’s on-chain data and returns the latest price.
+1. The contract imports `AggregatorV3Interface` from the official Chainlink library.
+2. The constructor connects the contract to the **ETH/USD price feed** on the **Sepolia testnet**.
+3. The `getLatestPrice()` function:
 
----
-
-### 🌍 Common Chainlink Price Feed Addresses
-
-| Network              | ETH/USD Feed Address                         |
-| -------------------- | -------------------------------------------- |
-| **Ethereum Mainnet** | `0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419` |
-| **Sepolia Testnet**  | `0x694AA1769357215DE4FAC081bf1f309aDC325306` |
-| **Polygon Mainnet**  | `0xF9680D99D6C9589e2a93a78A04A279e509205945` |
+   * Calls `latestRoundData()` from Chainlink’s oracle contract.
+   * Extracts the `price` value.
+   * Divides it by `1e8` to remove the default 8 decimal places.
+   * Returns the **human-readable ETH/USD price** (e.g., `2435`).
 
 ---
 
 ### 🧩 Example Output
 
-When you run the function:
+When you call:
 
 ```
 getLatestPrice()
-→ 285000000000
+→ 2435
 ```
 
-It means **1 ETH = $2,850.00**
-(Chainlink feeds return prices with 8 decimals.)
+It means **1 ETH ≈ $2,435 USD**.
+(Chainlink’s oracle originally returns prices with 8 decimals, which this function removes.)
+
+---
+
+### 🌍 Chainlink Price Feed Address
+
+| Network                      | Feed    | Address                                      |
+| ---------------------------- | ------- | -------------------------------------------- |
+| **Ethereum Sepolia Testnet** | ETH/USD | `0x694AA1769357215DE4FAC081bf1f309aDC325306` |
+
+*(Official reference: [Chainlink Docs – Price Feed Addresses](https://docs.chain.link/data-feeds/price-feeds/addresses?page=1&testnetPage=2#sepolia-testnet))*
 
 ---
 
@@ -68,56 +73,53 @@ It means **1 ETH = $2,850.00**
 
 Go to [https://remix.ethereum.org](https://remix.ethereum.org)
 
-#### Step 2 — Create a File
+#### Step 2 — Create File
 
-Create a new file named **`PriceConsumerV3.sol`** and paste the contract code.
+Create a new file named **`ChainLinkFund.sol`** and paste the contract code.
 
 #### Step 3 — Compile
 
-1. Click the **Solidity Compiler** tab.
-2. Set the compiler version to **0.8.20**.
-3. Click **Compile PriceConsumerV3.sol**.
+1. Open the **Solidity Compiler** tab.
+2. Set compiler version to **0.8.0 or higher**.
+3. Click **Compile ChainLinkFund.sol**.
 
 #### Step 4 — Connect MetaMask
 
-1. Open the **Deploy & Run Transactions** tab.
+1. Go to the **Deploy & Run Transactions** tab.
 2. Under **Environment**, select **Injected Provider – MetaMask**.
-3. Connect your MetaMask wallet to **Sepolia Testnet**.
-4. Get some test ETH from a **Sepolia faucet** if needed.
+3. Connect MetaMask to **Sepolia Testnet**.
+4. Get some test ETH from a **Sepolia faucet**.
 
-#### Step 5 — Deploy the Contract
+#### Step 5 — Deploy
 
-1. In the constructor input, enter the Chainlink feed address for Sepolia:
+1. No constructor parameters are required (feed address is hardcoded).
+2. Click **Deploy** and confirm the transaction.
 
-   ```
-   0x694AA1769357215DE4FAC081bf1f309aDC325306
-   ```
-2. Click **Deploy**.
-3. Confirm the MetaMask transaction.
+#### Step 6 — Fetch Price
 
-#### Step 6 — Read the Price
-
-1. After deploying, click **getLatestPrice()** under Deployed Contracts.
-2. You’ll see the live ETH/USD price returned from the Chainlink Oracle.
+1. After deployment, expand the **Deployed Contract** section.
+2. Click **getLatestPrice()**.
+3. You’ll see the live ETH/USD price from Chainlink’s oracle.
 
 ---
 
 ### 📝 Recap
 
-✅ **Key Takeaways**
+✅ **Key Points**
 
-* Blockchains can’t access external data by themselves.
-* Chainlink Oracles bridge real-world data to smart contracts.
-* The `AggregatorV3Interface` lets contracts read decentralized data feeds like prices.
+* Smart contracts can’t access external data by default.
+* Chainlink oracles securely bring off-chain data (like prices) on-chain.
+* `AggregatorV3Interface` is the standard way to read decentralized data feeds.
+* This contract simplifies the price by removing extra decimals for clarity.
 
 ---
 
 ### 💡 Optional Challenge
 
-Try modifying the contract to:
+Try extending the contract to:
 
-* Convert **ETH to USD** using the live price.
-* Display price with proper decimal formatting.
-* Add an event to log new price updates.
+* Convert **ETH to USD** by multiplying an input ETH amount with the live price.
+* Add an **event** to log fetched prices on-chain.
+* Support multiple feeds (e.g., BTC/USD, LINK/USD) via constructor input.
 
 ---

@@ -1,0 +1,44 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_number",
+          "type": "uint256"
+        }
+      ],
+      "name": "store",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "retrieve",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "favoriteNumber",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "608060405234801561001057600080fd5b50610119806100206000396000f3fe6080604052600436106100295760003560e01c80632a1afcd91461002e5780636057361d14610057578063d09de08a14610080575b600080fd5b6100386100a0565b60405161004591906100c4565b60405180910390f35b61005f6100a6565b60405161006c91906100c4565b60405180910390f35b6100886100ac565b60405161009591906100c4565b60405180910390f35b60008054905090565b60005481565b60008054905090565b600080fd5b6000819050919050565b6100b8816100a5565b82525050565b60006020820190506100d360008301846100af565b9291505056fea2646970667358221220f03b1e425cd1ec5dfed6cb55e2e2f121ef1a2e236f3a9ab4f41b4c845c1250e964736f6c63430008000033"
+}
