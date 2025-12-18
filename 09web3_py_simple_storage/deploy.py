@@ -31,7 +31,7 @@ compiled_sol = compile_standard(
 )
 
 # Save compiled output
-with open("SimpleStorage.json", "w") as file:
+with open("compiled_code.json", "w") as file:
     json.dump(compiled_sol, file)
 
 # Extract bytecode and ABI
@@ -41,7 +41,8 @@ abi = json.loads(compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]
 # --- Setup blockchain connection ---
 # Local Ganache (default)
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
-chain_id = 1337  # Ganache default
+chain_id = 1337
+
 
 # Inject POA middleware for compatible networks (optional for Ganache)
 w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)

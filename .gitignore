@@ -11,7 +11,7 @@ yarn.lock
 artifacts/
 cache/
 build/
-myenv/
+dotenv/
 # Remix specific files
 remix-ide-workspace.json
 remix.config.js
